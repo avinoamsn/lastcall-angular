@@ -1,0 +1,6 @@
+{
+  "appId": "com.lastcall.lastcall",
+  "appName": "last-call-ionic",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

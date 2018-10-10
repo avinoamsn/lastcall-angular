@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
+//import { Plugins } from '@capacitor/core';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import * as firebase from 'firebase/app';
+import { firebaseConfig } from './credentials';
+
+//const { SplashScreen, StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -14,6 +20,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
+    firebase.initializeApp(firebaseConfig);
     this.initializeApp();
   }
 

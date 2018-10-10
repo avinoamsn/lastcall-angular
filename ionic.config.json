@@ -1,5 +1,7 @@
 {
   "name": "last-call-ionic",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
