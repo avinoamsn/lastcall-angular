@@ -5,12 +5,12 @@ import { AuthService } from '../../services/user/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.page.html',
-	styleUrls: ['./login.page.scss'],
+	selector: 'app-signup',
+	templateUrl: './signup.page.html',
+	styleUrls: ['./signup.page.scss'],
 })
-export class LoginPage implements OnInit {
-	public loginForm: FormGroup;
+export class SignupPage implements OnInit {
+	public signupForm: FormGroup;
 	public loading: HTMLIonLoadingElement;
 
 	constructor(
@@ -20,24 +20,24 @@ export class LoginPage implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 	) {
-		// initialize login form w/ validators
-		this.loginForm = this.formBuilder.group({
+		// initialize signup form w/ validators
+		this.signupForm = this.formBuilder.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
 		});
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
-	async loginUser(loginForm: FormGroup): Promise<void> {
+	async signupUser(signupForm: FormGroup): Promise<void> {
 
-		if (!loginForm.valid) {
-			console.log('Form is not valid yet, current value: ', loginForm.value);
+		if (!signupForm.valid) {
+			console.log('Form is not valid yet, current value: ', signupForm.value);
 		} else {
-			const email = loginForm.value.email;
-			const password = loginForm.value.password;
+			const email = signupForm.value.email;
+			const password = signupForm.value.password;
 
-			this.authService.loginUser(email, password).then(() => {
+			this.authService.signupUser(email, password).then(() => {
 				this.loading.dismiss().then(() => {
 					this.router.navigateByUrl('home');
 				});

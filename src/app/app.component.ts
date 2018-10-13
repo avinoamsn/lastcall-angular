@@ -8,6 +8,7 @@ import { Platform } from '@ionic/angular';
 import * as firebase from 'firebase/app';
 import { firebaseConfig } from './credentials';
 
+//TODO: add capacitor support for location etc
 //const { SplashScreen, StatusBar } = Plugins;
 
 @Component({
