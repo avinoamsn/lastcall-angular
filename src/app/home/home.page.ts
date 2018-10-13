@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/user/auth.service';
 
 @Component({
 	selector: 'app-home',
@@ -7,11 +6,4 @@ import { AuthService } from '../services/user/auth.service';
 	styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	private authService: AuthService;
 }
-
-/*logoutUser(): void {
-	this.authService,logoutUser().then( () => {
-		this.router.navigateByUrl('login');
-	});
-}*/
