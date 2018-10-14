@@ -11,7 +11,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 /*
  *	If auth state changed, check to see if user is logged in:
@@ -19,22 +19,23 @@ import 'firebase/auth';
  *	false: reroute to /login page
  */
 export class AuthGuard implements CanActivate {
-	constructor(private router: Router){}
-  	canActivate(
-	    next: ActivatedRouteSnapshot,
-	    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-		    return new Promise((resolve, reject) => {
-		    	// auth state listener
-		    	firebase.auth().onAuthStateChanged((user: firebase.User) => {
-		    		if(user) {
-		    			console.log("User is logged in.");
-		    			resolve(true);
-		    		} else {
-		    			console.log("User is not logged in.");
-		    			this.router.navigate(['/login']);
-		    			resolve(false);
-		    		}
-		    	});
-		    });
-	}
+	constructor(private router: Router) {}
+
+	canActivate(
+		next: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+			return new Promise((resolve, reject) => {
+				// auth state listener
+				firebase.auth().onAuthStateChanged((user: firebase.User) => {
+					if (user) {
+						console.log('User is logged in.');
+						resolve(true);
+					} else {
+						console.log('User is not logged in.');
+						this.router.navigate(['/login']);
+						resolve(false);
+					}
+				});
+			});
+		}
 }

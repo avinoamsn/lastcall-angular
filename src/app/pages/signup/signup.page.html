@@ -31,7 +31,16 @@
 			<ion-label>Your password needs more than 6 characters.</ion-label>
 		</ion-item>
 
-    <ion-button (click)="signupUser(signupForm)" expand="block" [disabled]="!signupForm.valid">Creat Account</ion-button>
-    
+		<ion-select formControlName="userType" type="userType" placeholder="What type of user are you?">
+			<ion-select-option value="supplier">Restaurant</ion-select-option>
+			<ion-select-option value="subscriber">Consumer</ion-select-option>
+		</ion-select>
+
+		<ion-item class="error-message" *ngIf="!signupForm.controls['userType'].valid && signupForm.controls['userType'].touched">
+			<ion-label>Please select an option.</ion-label>
+		</ion-item>
+
+		<ion-button (click)="signupUser(signupForm)" expand="block" [disabled]="!signupForm.valid">Creat Account</ion-button>
+		
 	</form>
 </ion-content>

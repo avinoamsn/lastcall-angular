@@ -24,6 +24,7 @@ export class SignupPage implements OnInit {
 		this.signupForm = this.formBuilder.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+			userType: ['', Validators.compose([Validators.required])],
 		});
 	}
 
@@ -36,8 +37,9 @@ export class SignupPage implements OnInit {
 		} else {
 			const email = signupForm.value.email;
 			const password = signupForm.value.password;
+			const userType = signupForm.value.userType;
 
-			this.authService.signupUser(email, password).then(() => {
+			this.authService.signupUser(email, password, userType).then(() => {
 				this.loading.dismiss().then(() => {
 					this.router.navigateByUrl('home');
 				});
