@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-	public userProfile: any;
+	private userProfile: any; // 'any' type is used b/c TSlint declares it as a type specific to this directory. I'm not yet sure why that is.
 
 	constructor(
 		private alertCtrl: AlertController,
@@ -26,12 +26,14 @@ export class ProfilePage implements OnInit {
 		});
 	}
 
+	// logs out the user
 	logOut(): void {
 		this.authService.logoutUser().then( () => {
 			this.router.navigateByUrl('/login');
 		});
 	}
 
+	// ion alert to update the user's name
 	async updateName(): Promise<void> {
 		const alert = await this.alertCtrl.create({
 			subHeader: 'Your first and name',
@@ -63,6 +65,7 @@ export class ProfilePage implements OnInit {
 		await alert.present();
 	}
 
+	// ion alert to update the user's email
 	async updateEmail(): Promise<void> {
 		const alert = await this.alertCtrl.create({
 			inputs: [
@@ -89,6 +92,7 @@ export class ProfilePage implements OnInit {
 		await alert.present();
 	}
 
+	// ion alert to update the user's password
 	async updatePassword(): Promise<void> {
 		const alert = await this.alertCtrl.create({
 			inputs: [

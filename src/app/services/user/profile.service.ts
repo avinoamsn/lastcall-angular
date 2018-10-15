@@ -8,34 +8,42 @@ import 'firebase/firestore';
 	providedIn: 'root'
 })
 export class ProfileService {
-	public userProfileUserCol: firebase.firestore.DocumentReference;	// doc reference to the current user
-	public userProfileTypeCol: firebase.firestore.DocumentReference; // for batch writes
-	public currentUser: firebase.User; // user object
+	private userProfileUserColDocRef: firebase.firestore.DocumentReference;	// doc reference to the current user in the `/users/` collection
+	// tslint:disable-next-line:max-line-length
+	private userProfileTypeColDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
+	private currentUser: firebase.User; // user object
+	public userType: any;
 
 	constructor() {
 		// auth state listener
 		firebase.auth().onAuthStateChanged( user => {
 			if (user) {
 				this.currentUser = user;
-				this.userProfileUserCol = firebase.firestore().doc(`/users/${user.uid}`);
+				this.userProfileUserColDocRef = firebase.firestore().doc(`/users/${user.uid}`);
 
 				// identifies & sets local userType collection for batch writes
-				this.userProfileUserCol.get().then( (snap) => {
-					this.userProfileTypeCol = firebase.firestore().doc(`/${snap.data().userType}s/${user.uid}`);
+				this.userProfileUserColDocRef.get().then( snap => {
+					this.userProfileTypeColDocRef = firebase.firestore().doc(`/${snap.data().userType}s/${user.uid}`);
+					this.userType = snap.data().userType;
 				});
 			}
 		});
 	}
 
 	getUserProfile(): firebase.firestore.DocumentReference {
-		return this.userProfileUserCol;
+		return this.userProfileUserColDocRef;
+	}
+
+	// return the userType
+	getUserType(): string {
+		return this.userType;
 	}
 
 	updateName(firstName: string, lastName: string): Promise<any> {
 		const batch = firebase.firestore().batch();
 
-		batch.update(this.userProfileUserCol, { firstName, lastName });
-		batch.update(this.userProfileTypeCol, { firstName, lastName });
+		batch.update(this.userProfileUserColDocRef, { firstName, lastName });
+		batch.update(this.userProfileTypeColDocRef, { firstName, lastName });
 
 		return batch.commit();
 	}
@@ -49,8 +57,8 @@ export class ProfileService {
 		await this.currentUser.reauthenticateAndRetrieveDataWithCredential(credential);
 		await this.currentUser.updateEmail(newEmail);
 
-		batch.update(this.userProfileUserCol, { email: newEmail });
-		batch.update(this.userProfileTypeCol, { email: newEmail });
+		batch.update(this.userProfileUserColDocRef, { email: newEmail });
+		batch.update(this.userProfileTypeColDocRef, { email: newEmail });
 
 		return batch.commit();
 	}

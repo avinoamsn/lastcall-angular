@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { AuthService } from '../../services/user/auth.service';
 import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { AuthService } from '../../services/user/auth.service';
 
 @Component({
 	selector: 'app-signup',
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SignupPage implements OnInit {
 	public signupForm: FormGroup;
-	public loading: HTMLIonLoadingElement;
+	private loading: HTMLIonLoadingElement;
 
 	constructor(
 		private loadingCtrl: LoadingController,
@@ -30,6 +30,7 @@ export class SignupPage implements OnInit {
 
 	ngOnInit() {}
 
+	// determine form validity & register the user with AuthService
 	async signupUser(signupForm: FormGroup): Promise<void> {
 
 		if (!signupForm.valid) {

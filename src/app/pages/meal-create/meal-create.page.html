@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+	
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="/home"></ion-back-button>
+		</ion-buttons>
+		
+    <ion-title>Add a meal</ion-title>
+	
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<form [formGroup]="mealCreateForm">
+
+		<ion-item>
+			<ion-label stacked>Meal Name</ion-label>
+			<ion-input formControlName="mealName" type="text" placeholder="What's this meal called?" [class.invalid]="!mealCreateForm.controls['mealName'].valid && mealCreateForm.controls['mealName'].touched"></ion-input>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['mealName'].valid && mealCreateForm.controls['mealName'].touched">
+			<ion-label>Must include a name.</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Meal Description</ion-label>
+			<ion-input formControlName="mealDescription" type="text" placeholder="Enter a description for the meal." [class.invalid]="!mealCreateForm.controls['mealDescription'].valid && mealCreateForm.controls['mealDescription'].touched"></ion-input>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['mealDescription'].valid && mealCreateForm.controls['mealDescription'].touched">
+			<ion-label>Must include a description.</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Original Price</ion-label>
+			<ion-input formControlName="originalPrice" type="number" placeholder="The original price of the meal." [class.invalid]="!mealCreateForm.controls['originalPrice'].valid && mealCreateForm.controls['originalPrice'].touched"></ion-input>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['originalPrice'].valid && mealCreateForm.controls['originalPrice'].touched">
+			<ion-label>Must include the original price.</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Discount Price</ion-label>
+			<ion-input formControlName="discountPrice" type="number" placeholder="The original price of the meal." [class.invalid]="!mealCreateForm.controls['discountPrice'].valid && mealCreateForm.controls['discountPrice'].touched"></ion-input>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['discountPrice'].valid && mealCreateForm.controls['discountPrice'].touched">
+			<ion-label>Must include a discounted price.</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Number of Meals</ion-label>
+			<ion-input formControlName="numMeals" type="number" placeholder="How many meals are available?" [class.invalid]="!mealCreateForm.controls['numMeals'].valid && mealCreateForm.controls['numMeals'].touched"></ion-input>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['numMeals'].valid && mealCreateForm.controls['numMeals'].touched">
+			<ion-label>Must include the number of available meals.</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Offer Window Start Time</ion-label>
+			<ion-datetime formControlName="availabilityWindowStart" displayFormat="MMM D, h:mm a" [(ngModel)]="myDate"></ion-datetime>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['availabilityWindowStart'].valid && mealCreateForm.controls['availabilityWindowStart'].touched">
+			<ion-label>Must include an offer start time.</ion-label>
+		</ion-item>
+
+	</form>
+</ion-content>

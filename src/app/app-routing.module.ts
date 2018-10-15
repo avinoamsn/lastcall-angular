@@ -9,6 +9,7 @@ const routes: Routes = [
 	{ path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 	{ path: 'reset-password', loadChildren: './pages/reset-password/reset-password.module#ResetPasswordPageModule' },
 	{ path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
+  { path: 'meal-create', loadChildren: './pages/meal-create/meal-create.module#MealCreatePageModule' },
 	// TODO: add profile type to load correct profile module based on user (e.g. profile/:type)
 ];
 

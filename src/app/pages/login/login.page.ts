@@ -11,16 +11,15 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 	public loginForm: FormGroup;
-	public loading: HTMLIonLoadingElement;
+	private loading: HTMLIonLoadingElement;
 
 	constructor(
-		private loadingCtrl: LoadingController,
-		private alertCtrl: AlertController,
+		public loadingCtrl: LoadingController,
+		public alertCtrl: AlertController,
 		private authService: AuthService,
 		private formBuilder: FormBuilder,
 		private router: Router,
 	) {
-		// initialize login form w/ validators
 		this.loginForm = this.formBuilder.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
@@ -29,6 +28,7 @@ export class LoginPage implements OnInit {
 
 	ngOnInit() { }
 
+	// determines the login form validity & logs in the user
 	async loginUser(loginForm: FormGroup): Promise<void> {
 
 		if (!loginForm.valid) {

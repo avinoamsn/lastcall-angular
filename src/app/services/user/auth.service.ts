@@ -22,7 +22,7 @@ export class AuthService {
 
 	// register user with firebase auth
 	async signupUser(email: string, password: string, userType: string): Promise<any> {
-		// batch update for atomic writes in two collections (/users/, /'userType'/)
+		// batch update for atomic writes in two collections (/users/, /${userType}/)
 		const batch = firebase.firestore().batch();
 
 		try {
@@ -30,6 +30,7 @@ export class AuthService {
 
 			batch.set(firebase.firestore().doc(`/${userType}s/${newUserCredential.user.uid}`), { email, userType });
 			batch.set(firebase.firestore().doc(`/users/${newUserCredential.user.uid}`), { email, userType });
+
 			batch.commit();
 		} catch (error) {
 			console.error(error);
@@ -41,4 +42,5 @@ export class AuthService {
 	resetPassword(email: string): Promise<void> {
 		return firebase.auth().sendPasswordResetEmail(email);
 	}
+
 }
