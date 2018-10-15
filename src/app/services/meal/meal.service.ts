@@ -29,6 +29,7 @@ export class MealService {
 	}
 
 	// (for suppliers) add meal
+	// TODO: pass FormGroup & parse here?
 	addMeal(
 		supplierId: firebase.firestore.DocumentReference,
 		mealName: string,

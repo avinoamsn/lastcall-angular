@@ -42,6 +42,7 @@ export class MealCreatePage implements OnInit {
 		console.log(this.myDate);
 	}
 
+	// TODO: pass FormGroup & parse in meal service?
 	addMeal(
 		supplierId: firebase.firestore.DocumentReference,
 		mealName: string,
