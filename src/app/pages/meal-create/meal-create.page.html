@@ -60,12 +60,34 @@
 
 		<ion-item>
 			<ion-label stacked>Offer Window Start Time</ion-label>
-			<ion-datetime formControlName="availabilityWindowStart" displayFormat="MMM D, h:mm a" [(ngModel)]="myDate"></ion-datetime>
+			<ion-datetime formControlName="availabilityWindowStart" displayFormat="MMM D, h:mm a"></ion-datetime>
 		</ion-item>
 
 		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['availabilityWindowStart'].valid && mealCreateForm.controls['availabilityWindowStart'].touched">
 			<ion-label>Must include an offer start time.</ion-label>
 		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Offer Window End Time</ion-label>
+			<ion-datetime formControlName="availabilityWindowEnd" displayFormat="MMM D, h:mm a"></ion-datetime>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['availabilityWindowEnd'].valid && mealCreateForm.controls['availabilityWindowEnd'].touched">
+			<ion-label>Must include an offer end time.</ion-label>
+		</ion-item>
+
+		<ion-item>
+      <ion-label stacked>Pickup/Delivery</ion-label>
+      <ion-select formControlName="pickupType" multiple="true" okText="Okay" cancelText="Dismiss">
+				<ion-select-option *ngFor="let type of pickupTypes">{{type.text}}</ion-select-option>
+      </ion-select>
+		</ion-item>
+
+		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['pickupType'].valid && mealCreateForm.controls['pickupType'].touched">
+			<ion-label>Must select at least one pickup type.</ion-label>
+		</ion-item>
+
+		<ion-button (click)="addMeal(mealCreateForm)" expand="block" [disabled]="!mealCreateForm.valid">Add Meal</ion-button>
 
 	</form>
 </ion-content>

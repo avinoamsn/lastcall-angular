@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
 
 	ngOnInit() {
 		// listener for user profile
-		this.profileService.getUserProfile().onSnapshot( snap => {
+		this.profileService.getUserColUserDocRef().onSnapshot( snap => {
 			this.userProfile = snap.data();
 		});
 	}

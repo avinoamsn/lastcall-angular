@@ -8,9 +8,9 @@ import 'firebase/firestore';
 	providedIn: 'root'
 })
 export class ProfileService {
-	private userProfileUserColDocRef: firebase.firestore.DocumentReference;	// doc reference to the current user in the `/users/` collection
+	private userColUserDocRef: firebase.firestore.DocumentReference;	// doc reference to the current user in the `/users/` collection
 	// tslint:disable-next-line:max-line-length
-	private userProfileTypeColDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
+	private userTypeColUserDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
 	private currentUser: firebase.User; // user object
 	public userType: any;
 
@@ -19,19 +19,15 @@ export class ProfileService {
 		firebase.auth().onAuthStateChanged( user => {
 			if (user) {
 				this.currentUser = user;
-				this.userProfileUserColDocRef = firebase.firestore().doc(`/users/${user.uid}`);
+				this.userColUserDocRef = firebase.firestore().doc(`/users/${user.uid}`);
 
 				// identifies & sets local userType collection for batch writes
-				this.userProfileUserColDocRef.get().then( snap => {
-					this.userProfileTypeColDocRef = firebase.firestore().doc(`/${snap.data().userType}s/${user.uid}`);
+				this.userColUserDocRef.get().then( snap => {
+					this.userTypeColUserDocRef = firebase.firestore().doc(`/${snap.data().userType}s/${user.uid}`);
 					this.userType = snap.data().userType;
 				});
 			}
 		});
-	}
-
-	getUserProfile(): firebase.firestore.DocumentReference {
-		return this.userProfileUserColDocRef;
 	}
 
 	// return the userType
@@ -39,11 +35,21 @@ export class ProfileService {
 		return this.userType;
 	}
 
+	// returns the document reference to the user in the `/users/` collection
+	getUserColUserDocRef(): firebase.firestore.DocumentReference {
+		return this.userColUserDocRef;
+	}
+
+	// returns the document reference to the user in the `/{userType}s/` collection
+	async getUserTypeColUserDocRef(): Promise<firebase.firestore.DocumentReference> {
+		return await this.userTypeColUserDocRef;
+	}
+
 	updateName(firstName: string, lastName: string): Promise<any> {
 		const batch = firebase.firestore().batch();
 
-		batch.update(this.userProfileUserColDocRef, { firstName, lastName });
-		batch.update(this.userProfileTypeColDocRef, { firstName, lastName });
+		batch.update(this.userColUserDocRef, { firstName, lastName });
+		batch.update(this.userTypeColUserDocRef, { firstName, lastName });
 
 		return batch.commit();
 	}
@@ -57,8 +63,8 @@ export class ProfileService {
 		await this.currentUser.reauthenticateAndRetrieveDataWithCredential(credential);
 		await this.currentUser.updateEmail(newEmail);
 
-		batch.update(this.userProfileUserColDocRef, { email: newEmail });
-		batch.update(this.userProfileTypeColDocRef, { email: newEmail });
+		batch.update(this.userColUserDocRef, { email: newEmail });
+		batch.update(this.userTypeColUserDocRef, { email: newEmail });
 
 		return batch.commit();
 	}

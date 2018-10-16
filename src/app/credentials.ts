@@ -4,5 +4,5 @@ export const firebaseConfig = {
 	databaseURL: 'https://last-call-82705.firebaseio.com',
 	projectId: 'last-call-82705',
 	storageBucket: 'last-call-82705.appspot.com',
-	messagingSenderId: '103425327176'
+	messagingSenderId: '103425327176',
 };

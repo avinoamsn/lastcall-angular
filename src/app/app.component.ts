@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Platform } from '@ionic/angular';
 
 import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 import { firebaseConfig } from './credentials';
 
 // TODO: add capacitor support for location etc
@@ -22,11 +23,20 @@ export class AppComponent {
 		private statusBar: StatusBar
 	) {
 		firebase.initializeApp(firebaseConfig);
+
+		// Disable deprecated features
+		const db = firebase.firestore();
+		db.settings({
+			timestampsInSnapshots: true,
+		});
+
 		this.initializeApp();
 	}
 
 	initializeApp() {
 		this.platform.ready().then(() => {
+
+
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});

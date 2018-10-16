@@ -13,7 +13,8 @@ export class MealCreatePage implements OnInit {
 	public mealCreateForm: FormGroup;
 	private loading: HTMLIonLoadingElement;
 	public myDate: String = new Date().toISOString(); // ionic uses ISO 8601 datetime format for its value
-	// TODO: localize time for availability window
+	// TODO: localize time for availability window (Date object returns UTC)
+	public pickupTypes: Array<any>;
 
 	constructor(
 		private loadingCtrl: LoadingController,
@@ -35,27 +36,24 @@ export class MealCreatePage implements OnInit {
 			pickupType: ['', Validators.compose([Validators.required])],
 			coupon: [''],
 		});
+
+		this.pickupTypes = [
+			{ text: 'Pickup', value: 'pickup' },
+			{ text: 'Delivery', value: 'delivery' }
+		];
+
+		// sets the default date (currently UTC time) for the availability window date/time selections
+		// ngModel i/o property has been deprecated, will be removed in Angular v7
+		// https://angular.io/api/forms/FormControlName#use-with-ngmodel
+		this.mealCreateForm.get('availabilityWindowStart').setValue(this.myDate);
+		this.mealCreateForm.get('availabilityWindowEnd').setValue(this.myDate);
 	}
 
-	ngOnInit() {
-		console.log(this.myDateOffset);
-		console.log(this.myDate);
-	}
+	ngOnInit() {}
 
-	// TODO: pass FormGroup & parse in meal service?
-	addMeal(
-		supplierId: firebase.firestore.DocumentReference,
-		mealName: string,
-		mealDescription: string,
-		originalPrice: number,
-		discountPrice: number,
-		numMeals: number,
-		availabilityWindowStart: Date,
-		availabilityWindowEnd: Date,
-		pickupType: Array<boolean>,
-		coupon: boolean,
-	): void {
-
+	// passes mealCreateForm to mealService for parsing & committing
+	addMeal( mealCreateForm: FormGroup ): Promise<any> {
+		return this.mealService.addMeal(mealCreateForm);
 	}
 
 }

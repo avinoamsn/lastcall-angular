@@ -2,68 +2,68 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { ProfileService } from '../user/profile.service';
 import { Timestamp } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class MealService {
-	private mealsListColRef: firebase.firestore.CollectionReference; // reference to the current list of displayed meals
-	// tslint:disable-next-line:max-line-length
-	private userProfileTypeColDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
+	// reference to the doc id of a meal in a supplier's collection
+	private supplierMealsListColDocRef: firebase.firestore.DocumentReference;
+	// doc reference to the current user in the `/${userType}s/` collection
+	private userTypeColUserDocRef: Promise<firebase.firestore.DocumentReference>;
 	private userType: any;
 
 	constructor(
-		private profileService: ProfileService,
+		public profileService: ProfileService,
 	) {
-		firebase.auth().onAuthStateChanged( user => {
-			if (user) {
-				this.userType = profileService.getUserType();
-				this.userProfileTypeColDocRef = firebase.firestore().doc(`/${this.userType}s/${user.uid}`);
+		this.userType = profileService.getUserType();
+		this.userTypeColUserDocRef = profileService.getUserTypeColUserDocRef();
 
-				// if the userType is 'supplier', set mealsListColRef to the meals collection in the user doc. Otherwise, set to /meals/ collection
-				if (this.userType === 'suppliers') {
-					this.mealsListColRef = firebase.firestore().collection(`${this.userProfileTypeColDocRef}/meals/`);
-				}
-			}
-		});
+		// tslint:disable-next-line:max-line-length
+		// if the userType is 'supplier', set supplierMealsListColDocRef to the meals collection in the user doc. Otherwise, set to /meals/ collection
+		/*if (this.userType === 'suppliers') {
+			this.supplierMealsListColDocRef = firebase.firestore().collection(`${this.userTypeColUserDocRef}/meals/`);
+		}*/
 	}
 
 	// (for suppliers) add meal
-	// TODO: pass FormGroup & parse here?
-	addMeal(
-		supplierId: firebase.firestore.DocumentReference,
-		mealName: string,
-		mealDescription: string,
-		originalPrice: number,
-		offerPrice: number,
-		numMeals: number,
-		availabilityWindowStart: Date,
-		availabilityWindowEnd: Date,
-		pickupType: Array<boolean>,
-		coupon: boolean,
-		) {
+	async addMeal( mealCreateForm: FormGroup ): Promise<void> {
 			const batch = firebase.firestore().batch();
-			const newMealRef = firebase.firestore().collection('meals').doc(); // create a reference/tx ID for batch commit
+			const newMealDocRef = firebase.firestore().collection('meals').doc(); // document reference to the new meal
 
-			// add meal doc to meals collection
-			batch.update(newMealRef, {
-				supplierId: supplierId,
-				mealName: mealName,
-				mealDescription: mealDescription,
-				originalPrice: originalPrice,
-				offerPrice: offerPrice,
-				numMeals: numMeals,
-				availabilityWindowStart: availabilityWindowStart,
-				availabilityWindowEnd: availabilityWindowEnd,
-				pickupType: pickupType,
-				coupon: coupon,
+			this.profileService.getUserTypeColUserDocRef().then( ref => {
+				// since only suppliers run this function, supplierMealsListColDocRef is set to the supplier's meals sub-collection
+				this.supplierMealsListColDocRef = firebase.firestore().collection(`/suppliers/${ref.id}/meals/`).doc();
+
+				// add meal doc to meals collection
+				batch.set(newMealDocRef, {
+					supplierId: ref.id,
+					mealName: mealCreateForm.value.mealName,
+					mealDescription: mealCreateForm.value.mealDescription,
+					originalPrice: mealCreateForm.value.originalPrice,
+					discountPrice: mealCreateForm.value.discountPrice,
+					numMeals: mealCreateForm.value.numMeals,
+					availabilityWindowStart: mealCreateForm.value.availabilityWindowStart,
+					availabilityWindowEnd: mealCreateForm.value.availabilityWindowEnd,
+					pickupType: mealCreateForm.value.pickupType,
+					coupon: mealCreateForm.value.coupon,
+				});
+
+				// this command could be run outside of the promise, but keeping it here for clarity
+				// add meal reference to meals list under supplier
+				batch.set(this.supplierMealsListColDocRef,
+					{ mealRef: newMealDocRef });
+
+				// TODO: check to make sure commit executed successfully
+				// 10.15.18: will catch any errors but this likely isn't sufficient
+				try {
+					batch.commit();
+				} catch (error) {
+					console.error(error);
+					throw new Error(error);
+				}
 			});
-
-			// add meal reference to meals list under user
-			batch.update(newMealRef, this.mealsListColRef);
-
-			// TODO: check to make sure commit executed successfully
-			batch.commit();
 	}
 
 	// remove meal
@@ -76,9 +76,9 @@ export class MealService {
 		return firebase.firestore().collection('meals').doc(mealId);
 	}
 
-	// (for suppliers) return a col reference to the meals of a specific supplier
-	getSupplierMeals(): firebase.firestore.CollectionReference {
-		return this.mealsListColRef;
+	// return a doc reference to a specific meal within a supplier's collection
+	getSupplierMeal(): firebase.firestore.DocumentReference {
+		return this.supplierMealsListColDocRef;
 	}
 
 	// returns a list of meal references by proximity to user
