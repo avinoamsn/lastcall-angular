@@ -38,7 +38,7 @@ export class MealService {
 
 				// add meal doc to meals collection
 				batch.set(newMealDocRef, {
-					supplierId: ref.id,
+					supplierRef: ref,
 					mealName: mealCreateForm.value.mealName,
 					mealDescription: mealCreateForm.value.mealDescription,
 					originalPrice: mealCreateForm.value.originalPrice,
@@ -50,13 +50,13 @@ export class MealService {
 					coupon: mealCreateForm.value.coupon,
 				});
 
-				// this command could be run outside of the promise, but keeping it here for clarity
 				// add meal reference to meals list under supplier
+				// this command could be run outside of the promise, but keeping it here for clarity
 				batch.set(this.supplierMealsListColDocRef,
 					{ mealRef: newMealDocRef });
 
 				// TODO: check to make sure commit executed successfully
-				// 10.15.18: will catch any errors but this likely isn't sufficient
+				// 10.15.18: should catch any errors but this likely isn't sufficient
 				try {
 					batch.commit();
 				} catch (error) {
