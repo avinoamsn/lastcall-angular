@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, AngularDelegate } from '@ionic/angular';
 import { MealService } from '../../services/meal/meal.service';
 
 @Component({
@@ -12,9 +12,11 @@ import { MealService } from '../../services/meal/meal.service';
 export class MealCreatePage implements OnInit {
 	public mealCreateForm: FormGroup;
 	private loading: HTMLIonLoadingElement;
-	public myDate: String = new Date().toISOString(); // ionic uses ISO 8601 datetime format for its value
+	public myDate: String = new Date().toISOString(); // toISOString() is used b/c ionic uses ISO 8601 datetime format for its value
 	// TODO: localize time for availability window (Date object returns UTC)
 	public pickupTypes: Array<any>;
+	public pickupTypesBoolObject: Object;
+
 
 	constructor(
 		private loadingCtrl: LoadingController,
@@ -37,6 +39,7 @@ export class MealCreatePage implements OnInit {
 			coupon: [''],
 		});
 
+		// TODO: wondering how this can be turned into an array of booleans for Firestore, but retain the ngFor loop functionality in the DOM
 		this.pickupTypes = [
 			{ text: 'Pickup', value: 'pickup' },
 			{ text: 'Delivery', value: 'delivery' }
@@ -45,8 +48,14 @@ export class MealCreatePage implements OnInit {
 		// sets the default date (currently UTC time) for the availability window date/time selections
 		// ngModel i/o property has been deprecated, will be removed in Angular v7
 		// https://angular.io/api/forms/FormControlName#use-with-ngmodel
-		this.mealCreateForm.get('availabilityWindowStart').setValue(this.myDate);
-		this.mealCreateForm.get('availabilityWindowEnd').setValue(this.myDate);
+		// TODO: consider moment.js as an alternative to this?
+		// removing default dates for now b/c, for some reason, ionic returns an object when the date is modified
+		// (vs. an ISO string, which it uses to display the default date),
+		// and converting the object into an ISO string for datatype consistency is proving difficult
+		this.mealCreateForm.get('availabilityWindowStart')
+			.setValue(this.myDate);
+		this.mealCreateForm.get('availabilityWindowEnd')
+			.setValue(this.myDate);
 	}
 
 	ngOnInit() {}

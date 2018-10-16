@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import { ProfileService } from '../user/profile.service';
 import { Timestamp } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { convertDataToISO } from 'ionic-angular/util/datetime-util';
 
 @Injectable({
 	providedIn: 'root'
@@ -35,6 +36,17 @@ export class MealService {
 			this.profileService.getUserTypeColUserDocRef().then( ref => {
 				// since only suppliers run this function, supplierMealsListColDocRef is set to the supplier's meals sub-collection
 				this.supplierMealsListColDocRef = firebase.firestore().collection(`/suppliers/${ref.id}/meals/`).doc();
+
+				// if availability window start & end times have been modified, turn them into ISO strings
+				// (retain format of the default date displayed in the DOM)
+				/*if (typeof mealCreateForm.value.availabilityWindowStart !== 'string') {
+					mealCreateForm.value.availabilityWindowStart = convertDataToISO(mealCreateForm.value.availabilityWindowStart);
+				}
+				if (typeof mealCreateForm.value.availabilityWindowEnd !== 'string') {
+					mealCreateForm.value.availabilityWindowEnd = convertDataToISO(mealCreateForm.value.availabilityWindowEnd);
+				}*/
+
+				// TODO: dates are turned into ISO strings to conform to the format used by the default start & end times (in the DOM)
 
 				// add meal doc to meals collection
 				batch.set(newMealDocRef, {
@@ -96,7 +108,7 @@ export class MealService {
 		return null; // TODO
 	}
 
-		// returns a list of meal references by expiration date, soonest first
+	// returns a list of meal references by expiration date, soonest first
 	getMealsByTag(
 		mealId: string,
 		distance: number,

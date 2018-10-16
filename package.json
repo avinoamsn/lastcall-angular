@@ -29,6 +29,7 @@
     "cordova-plugin-splashscreen": "5.0.2",
     "core-js": "^2.5.3",
     "firebase": "^5.5.4",
+    "ionic-angular": "^3.9.2",
     "rxjs": "6.2.2",
     "rxjs-compat": "^6.3.3",
     "tslib": "^1.9.3",
