@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-	private userProfile: any; // 'any' type is used b/c TSlint declares it as a type specific to this directory. I'm not yet sure why that is.
+	public userProfile: any; // 'any' type is used b/c TSlint declares it as a type specific to this directory. I'm not yet sure why that is.
 
 	constructor(
 		private alertCtrl: AlertController,
