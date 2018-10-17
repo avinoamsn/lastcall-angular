@@ -79,7 +79,7 @@
 		<ion-item>
       <ion-label stacked>Pickup/Delivery</ion-label>
       <ion-select formControlName="pickupType" multiple="true" okText="Okay" cancelText="Dismiss">
-				<ion-select-option *ngFor="let type of pickupTypes">{{type.text}}</ion-select-option>
+				<ion-select-option *ngFor="let type of pickupTypes" value="{{ type.value }}">{{ type.text }}</ion-select-option>
       </ion-select>
 		</ion-item>
 

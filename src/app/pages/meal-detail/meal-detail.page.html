@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="home"></ion-back-button>
+		</ion-buttons>
+
+		<ion-title>{{ currentMeal?.mealName }}</ion-title>
+		
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-card>
+		<ion-card-content>
+			<p>{{ currentMeal?.mealDescription }}</p>
+			<p>{{ currentMeal?.discountPrice }}&emsp;<sup><s>{{ currentMeal?.originalPrice }}</s></sup></p>
+			<h2>{{ currentMeal?.supplierRefData.firstName }} {{ currentMeal?.supplierRefData.lastName }}</h2>
+		</ion-card-content>
+	</ion-card>
+
+</ion-content>

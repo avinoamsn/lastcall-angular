@@ -31,8 +31,8 @@ export class ProfileService {
 	}
 
 	// return the userType
-	getUserType(): string {
-		return this.userType;
+	async getUserType(): Promise<string> {
+		return await this.userType;
 	}
 
 	// returns the document reference to the user in the `/users/` collection

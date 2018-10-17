@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, AngularDelegate } from '@ionic/angular';
 import { MealService } from '../../services/meal/meal.service';
+// import { DateTime } from 'luxon';
 
 @Component({
 	selector: 'app-meal-create',
@@ -15,8 +16,6 @@ export class MealCreatePage implements OnInit {
 	public myDate: String = new Date().toISOString(); // toISOString() is used b/c ionic uses ISO 8601 datetime format for its value
 	// TODO: localize time for availability window (Date object returns UTC)
 	public pickupTypes: Array<any>;
-	public pickupTypesBoolObject: Object;
-
 
 	constructor(
 		private loadingCtrl: LoadingController,
@@ -24,6 +23,7 @@ export class MealCreatePage implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private mealService: MealService,
+		// private dateTime: DateTime,
 	) {
 		// initialize create meal form w/ validators
 		// TODO: additional validators & error checking
@@ -41,6 +41,7 @@ export class MealCreatePage implements OnInit {
 
 		// TODO: wondering how this can be turned into an array of booleans for Firestore, but retain the ngFor loop functionality in the DOM
 		this.pickupTypes = [
+			{ text: 'Dine in', value: 'dine-in' },
 			{ text: 'Pickup', value: 'pickup' },
 			{ text: 'Delivery', value: 'delivery' }
 		];

@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { ProfileService } from '../user/profile.service';
-import { Timestamp } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { convertDataToISO } from 'ionic-angular/util/datetime-util';
+import { convertDataToISO } from 'ionic-angular/util/datetime-util'; // planned on using this to remedy the date formatting problem
 
 @Injectable({
 	providedIn: 'root'
 })
 export class MealService {
 	// reference to the doc id of a meal in a supplier's collection
-	private supplierMealsListColDocRef: firebase.firestore.DocumentReference;
+	public supplierMealsListColDocRef: firebase.firestore.DocumentReference;
+	// reference to the /meals/ collection
+	public mealsColRef: firebase.firestore.CollectionReference;
 	// doc reference to the current user in the `/${userType}s/` collection
-	private userTypeColUserDocRef: Promise<firebase.firestore.DocumentReference>;
-	private userType: any;
+	public userTypeColUserDocRef: Promise<firebase.firestore.DocumentReference>;
+	public userType: any;
 
 	constructor(
 		public profileService: ProfileService,
 	) {
+		this.mealsColRef = firebase.firestore().collection(`/meals/`);
 		this.userType = profileService.getUserType();
 		this.userTypeColUserDocRef = profileService.getUserTypeColUserDocRef();
 
@@ -39,7 +41,11 @@ export class MealService {
 
 				// if availability window start & end times have been modified, turn them into ISO strings
 				// (retain format of the default date displayed in the DOM)
-				/*if (typeof mealCreateForm.value.availabilityWindowStart !== 'string') {
+				// maybe this will be helpful:
+				// https://github.com/ionic-team/ionic/blob/24544e01e150bf59bfc8a6d1cc38b7cdae860c4f/src/util/datetime-util.ts#L339
+				/*console.log(mealCreateForm.value.availabilityWindowStart.hour);
+				console.log(convertDataToISO(mealCreateForm.value.availabilityWindowStart.hour));
+				if (typeof mealCreateForm.value.availabilityWindowStart !== 'string') {
 					mealCreateForm.value.availabilityWindowStart = convertDataToISO(mealCreateForm.value.availabilityWindowStart);
 				}
 				if (typeof mealCreateForm.value.availabilityWindowEnd !== 'string') {
@@ -53,8 +59,8 @@ export class MealService {
 					supplierRef: ref,
 					mealName: mealCreateForm.value.mealName,
 					mealDescription: mealCreateForm.value.mealDescription,
-					originalPrice: mealCreateForm.value.originalPrice,
-					discountPrice: mealCreateForm.value.discountPrice,
+					originalPrice: mealCreateForm.value.originalPrice.toFixed(2),
+					discountPrice: mealCreateForm.value.discountPrice.toFixed(2),
 					numMeals: mealCreateForm.value.numMeals,
 					availabilityWindowStart: mealCreateForm.value.availabilityWindowStart,
 					availabilityWindowEnd: mealCreateForm.value.availabilityWindowEnd,
@@ -78,19 +84,25 @@ export class MealService {
 			});
 	}
 
-	// remove meal
-	removeMeal() {
-
+	// remove meal & meal reference from supplier's meal collection
+	// TODO: rm meal from supplier's collection, too
+	removeMeal( mealId: string ): void {
+		this.getMeal(mealId).delete();
 	}
 
 	// return a doc reference to a specific meal
 	getMeal( mealId: string ): firebase.firestore.DocumentReference {
-		return firebase.firestore().collection('meals').doc(mealId);
+		return this.mealsColRef.doc(mealId);
 	}
 
 	// return a doc reference to a specific meal within a supplier's collection
 	getSupplierMeal(): firebase.firestore.DocumentReference {
 		return this.supplierMealsListColDocRef;
+	}
+
+	// returns all meals as they're ordered in the collection
+	getMeals(): firebase.firestore.CollectionReference {
+		return this.mealsColRef;
 	}
 
 	// returns a list of meal references by proximity to user
