@@ -60,7 +60,7 @@
 
 		<ion-item>
 			<ion-label stacked>Offer Window Start Time</ion-label>
-			<ion-datetime formControlName="availabilityWindowStart" displayFormat="MMM D, h:mm a"></ion-datetime>
+			<ion-datetime formControlName="availabilityWindowStart" displayFormat="DDD, h:mm a"></ion-datetime>
 		</ion-item>
 
 		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['availabilityWindowStart'].valid && mealCreateForm.controls['availabilityWindowStart'].touched">
@@ -69,7 +69,7 @@
 
 		<ion-item>
 			<ion-label stacked>Offer Window End Time</ion-label>
-			<ion-datetime formControlName="availabilityWindowEnd" displayFormat="MMM D, h:mm a"></ion-datetime>
+			<ion-datetime formControlName="availabilityWindowEnd" displayFormat="DDD, h:mm a"></ion-datetime>
 		</ion-item>
 
 		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['availabilityWindowEnd'].valid && mealCreateForm.controls['availabilityWindowEnd'].touched">
