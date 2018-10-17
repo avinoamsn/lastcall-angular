@@ -10,9 +10,9 @@ const routes: Routes = [
 	{ path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 	{ path: 'reset-password', loadChildren: './pages/reset-password/reset-password.module#ResetPasswordPageModule' },
 	{ path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
-	{ path: 'meal-create', loadChildren: './pages/meal-create/meal-create.module#MealCreatePageModule' },
-	{ path: 'meal-list', loadChildren: './pages/meal-list/meal-list.module#MealListPageModule' },
-	{ path: 'meal-detail/:id', loadChildren: './pages/meal-detail/meal-detail.module#MealDetailPageModule' },
+	{ path: 'meal-create', loadChildren: './pages/meal-create/meal-create.module#MealCreatePageModule', canActivate: [AuthGuard] },
+	{ path: 'meal-list', loadChildren: './pages/meal-list/meal-list.module#MealListPageModule', canActivate: [AuthGuard] },
+	{ path: 'meal-detail/:id', loadChildren: './pages/meal-detail/meal-detail.module#MealDetailPageModule', canActivate: [AuthGuard] },
 ];
 
 @NgModule({
