@@ -13,6 +13,7 @@ export class ProfileService {
 	private userTypeColUserDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
 	private currentUser: firebase.User; // user object
 	public userType: any;
+	public profileSnapshot: firebase.firestore.DocumentReference;
 
 	constructor() {
 		// auth state listener
@@ -22,6 +23,7 @@ export class ProfileService {
 				this.userColUserDocRef = firebase.firestore().doc(`/users/${user.uid}`);
 
 				// identifies & sets local userType collection for batch writes
+				// TODO: can this be moved to an async/await structure, maybe outside of the constructor?
 				this.userColUserDocRef.get().then( snap => {
 					this.userTypeColUserDocRef = firebase.firestore().doc(`/${snap.data().userType}s/${user.uid}`);
 					this.userType = snap.data().userType;
@@ -32,7 +34,9 @@ export class ProfileService {
 
 	// return the userType
 	async getUserType(): Promise<string> {
-		return await this.userType;
+		const snap = await this.userColUserDocRef.get();
+		this.userType = await snap.data().userType;
+		return this.userType;
 	}
 
 	// returns the document reference to the user in the `/users/` collection

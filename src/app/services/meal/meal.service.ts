@@ -21,25 +21,18 @@ export class MealService {
 	) {
 		this.mealsColRef = firebase.firestore().collection(`/meals/`);
 		this.userType = profileService.getUserType();
-		// this.userTypeColUserDocRef = profileService.getUserTypeColUserDocRef();
-
-		// tslint:disable-next-line:max-line-length
-		// if the userType is 'supplier', set supplierMealsListColDocRef to the meals collection in the user doc. Otherwise, set to /meals/ collection
-		/*if (this.userType === 'suppliers') {
-			this.supplierMealsListColDocRef = firebase.firestore().collection(`${this.userTypeColUserDocRef}/meals/`);
-		}*/
 	}
 
 	// (for suppliers) add meal
 	async addMeal( mealCreateForm: FormGroup ): Promise<void> {
-			const batch = firebase.firestore().batch();
-			const newMealDocRef = firebase.firestore().collection('meals').doc(); // document reference to the new meal
+			const batch = firebase.firestore().batch(); // for batch commit to /meals/ and supplier's meal list
+			const newMealDocRef = this.mealsColRef.doc(); // document reference to the new meal
 
 			this.userTypeColUserDocRef = await this.profileService.getUserTypeColUserDocRef();
 			this.supplierMealsListColDocRef = await firebase.firestore().collection(`/suppliers/${this.userTypeColUserDocRef.id}/meals/`).doc();
 
 			// add meal doc to meals collection
-			// TODO: normalize the dates passed (Ionic displays an ISO format but passes an object)
+			// TODO: normalize the dates passed (Ionic displays an ISO format but passes an unfriendly object)
 			batch.set(newMealDocRef, {
 				supplierRef: this.userTypeColUserDocRef,
 				mealName: mealCreateForm.value.mealName,
