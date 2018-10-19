@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AlertController, LoadingController, AngularDelegate } from '@ionic/angular';
+// import { Router } from '@angular/router';
+// import { AlertController, LoadingController, AngularDelegate } from '@ionic/angular';
 import { MealService } from '../../services/meal/meal.service';
 // import { DateTime } from 'luxon';
 
@@ -12,16 +12,16 @@ import { MealService } from '../../services/meal/meal.service';
 })
 export class MealCreatePage implements OnInit {
 	public mealCreateForm: FormGroup;
-	private loading: HTMLIonLoadingElement;
+	// private loading: HTMLIonLoadingElement;
 	public myDate: String = new Date().toISOString(); // toISOString() is used b/c ionic uses ISO 8601 datetime format for its value
-	// TODO: localize time for availability window (Date object returns UTC)
+	// TODO: localize time for offer window (Date object returns UTC)
 	public pickupTypes: Array<any>;
 
 	constructor(
-		private loadingCtrl: LoadingController,
-		private alertCtrl: AlertController,
+		// private loadingCtrl: LoadingController,
+		// private alertCtrl: AlertController,
 		private formBuilder: FormBuilder,
-		private router: Router,
+		// private router: Router,
 		private mealService: MealService,
 		// private dateTime: DateTime,
 	) {

@@ -1,29 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MealService } from '../services/meal/meal.service';
-import {ProfileService } from '../services/user/profile.service';
+import { ProfileService } from '../services/user/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
 	templateUrl: 'home.page.html',
 	styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-	public profileService: ProfileService;
-	public userType: string;
+export class HomePage implements OnInit {
+	private userType: string;
 
-	constructor() {
-		// this.rerouteToUserDashboard();
+	constructor(
+		private profileService: ProfileService,
+		private router: Router,
+	) {}
+
+	// get userType & pass it to rerouteToUserDashboard()
+	async ngOnInit() {
+		this.userType = await	this.profileService.getUserType();
+		this.rerouteToUserDashboard( this.userType );
 	}
 
 	// reroute user to the correct dashboard, based on userType
-	rerouteToUserDashboard() {
-		this.profileService.getUserType().then( userType => {
-			try {
-				console.log(userType);
-			} catch (error) {
-				console.log(error);
-			}
-		});
-	}
+	// TODO: guard against users getting to the alternate dash by manually entering URL
+	async rerouteToUserDashboard( userType: string ) {
+		console.log(userType);
 
+		if (userType === 'supplier') {
+			this.router.navigateByUrl('dashboard-supplier');
+		} else {
+			this.router.navigateByUrl('dashboard-subscriber');
+		}
+	}
 }

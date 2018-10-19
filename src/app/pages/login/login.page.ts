@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/user/auth.service';
+import { ProfileService } from '../../services/user/profile.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,11 +13,13 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 	public loginForm: FormGroup;
 	private loading: HTMLIonLoadingElement;
+	private userType: string;
 
 	constructor(
 		public loadingCtrl: LoadingController,
 		public alertCtrl: AlertController,
 		private authService: AuthService,
+		private profileService: ProfileService,
 		private formBuilder: FormBuilder,
 		private router: Router,
 	) {
@@ -26,7 +29,7 @@ export class LoginPage implements OnInit {
 		});
 	}
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	// determines the login form validity & logs in the user
 	async loginUser(loginForm: FormGroup): Promise<void> {
@@ -38,11 +41,11 @@ export class LoginPage implements OnInit {
 			const password = loginForm.value.password;
 
 			this.authService.loginUser(email, password).then(() => {
-				this.loading.dismiss().then(() => {
-					this.router.navigateByUrl('home');
+				this.loading.dismiss().then(async () => {
+					this.userType = await	this.profileService.getUserType();
+					this.rerouteToUserDashboard( this.userType );
 				});
-			},
-				error => {
+			}, error => {
 					this.loading.dismiss().then(async () => {
 						const alert = await this.alertCtrl.create({
 							message: error.message,
@@ -50,10 +53,22 @@ export class LoginPage implements OnInit {
 						});
 						await alert.present();
 					});
-				});
+			});
 
 			this.loading = await this.loadingCtrl.create();
 			await this.loading.present();
+		}
+	}
+
+	// reroute user to the correct dashboard, based on userType
+	// TODO: guard against users getting to the alternate dash by manually entering URL
+	async rerouteToUserDashboard( userType: string ) {
+		console.log(userType);
+
+		if (userType === 'supplier') {
+			this.router.navigateByUrl('dashboard-supplier');
+		} else {
+			this.router.navigateByUrl('dashboard-subscriber');
 		}
 	}
 }

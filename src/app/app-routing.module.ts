@@ -13,6 +13,8 @@ const routes: Routes = [
 	{ path: 'meal-create', loadChildren: './pages/meal-create/meal-create.module#MealCreatePageModule', canActivate: [AuthGuard] },
 	{ path: 'meal-list', loadChildren: './pages/meal-list/meal-list.module#MealListPageModule', canActivate: [AuthGuard] },
 	{ path: 'meal-detail/:id', loadChildren: './pages/meal-detail/meal-detail.module#MealDetailPageModule', canActivate: [AuthGuard] },
+  { path: 'dashboard-supplier', loadChildren: './pages/dashboard-supplier/dashboard-supplier.module#DashboardSupplierPageModule' },
+  { path: 'dashboard-subscriber', loadChildren: './pages/dashboard-subscriber/dashboard-subscriber.module#DashboardSubscriberPageModule' },
 ];
 
 @NgModule({

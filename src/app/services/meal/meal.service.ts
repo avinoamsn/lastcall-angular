@@ -8,12 +8,9 @@ import { convertDataToISO } from 'ionic-angular/util/datetime-util'; // planned 
 	providedIn: 'root'
 })
 export class MealService {
-	// reference to the doc id of a meal in a supplier's collection
-	public supplierMealsListColDocRef: firebase.firestore.DocumentReference;
-	// reference to the /meals/ collection
-	public mealsColRef: firebase.firestore.CollectionReference;
-	// doc reference to the current user in the `/${userType}s/` collection
-	public userTypeColUserDocRef: firebase.firestore.DocumentReference;
+	public supplierMealsListColDocRef: firebase.firestore.DocumentReference; 	// reference to the doc of a meal in a supplier's collection
+	public mealsColRef: firebase.firestore.CollectionReference;	// reference to the /meals/ collection
+	public userTypeColUserDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
 	public userType: any;
 
 	constructor(
@@ -45,6 +42,8 @@ export class MealService {
 				pickupType: mealCreateForm.value.pickupType,
 				coupon: mealCreateForm.value.coupon,
 			});
+
+			console.log(mealCreateForm.value.availabilityWindowStart);
 
 			// add meal reference to meals list under supplier
 			batch.set(this.supplierMealsListColDocRef,
@@ -79,6 +78,12 @@ export class MealService {
 	// returns all meals as they're ordered in the collection
 	getMeals(): firebase.firestore.CollectionReference {
 		return this.mealsColRef;
+	}
+
+	// returns all meals from a specific supplier's list
+	// This method DOES NOT search through the /meals/ collection, it goes through the array of meal references from within the supplier doc
+	getMealsBySupplier( supplierId: string ) {
+		
 	}
 
 	// returns a list of meal references by proximity to user
