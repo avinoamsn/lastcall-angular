@@ -2,7 +2,7 @@
   <ion-toolbar>
 
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/home"></ion-back-button>
+			<ion-back-button defaultHref="home"></ion-back-button>
 		</ion-buttons>
 
 		<ion-title>Meals</ion-title>
@@ -11,11 +11,17 @@
 </ion-header>
 
 <ion-content padding>
+
+	<ion-select (ionChange)="filterChange($event)" placeholder="Filter By">
+		<ion-select-option value="price">Price</ion-select-option>
+		<ion-select-option value="default">Default</ion-select-option>
+	</ion-select>
+
 	<ion-list>
 
-		<ion-list-header>
+		<!--ion-list-header>
 			<ion-label>Meals</ion-label>
-		</ion-list-header>
+		</ion-list-header-->
 
 		<ion-item tappable *ngFor="let meal of mealList" routerLink="/meal-detail/{{ meal?.id }}">
 			<ion-label>
@@ -24,6 +30,6 @@
 				<p>{{ meal?.discountPrice }}&emsp;<sup><s>{{ meal?.originalPrice }}</s></sup></p>
 			</ion-label>
 		</ion-item>
-
 	</ion-list>
+
 </ion-content>

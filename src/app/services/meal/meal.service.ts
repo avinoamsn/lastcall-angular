@@ -20,7 +20,20 @@ export class MealService {
 		this.userType = profileService.getUserType();
 	}
 
+	// all queries are piped through userTypeCheck before being returned
+	// if the userType is supplier, queries are filtered by supplier
+	// (assumption is suppliers only need to see their meals)
+	userTypeCheck( userType: string, query: any ): firebase.firestore.Query {
+		// TODO
+		/*if (userType === 'supplier') {
+			const ref = firebase.firestore().collection('suppliers').doc(supplierId);
+			return this.mealsColRef.where('supplierRef', '==', ref);
+		}*/
+		return null;
+	}
+
 	// (for suppliers) add meal
+	// TODO: hold mealRefs in an array, rather than a document collection?
 	async addMeal( mealCreateForm: FormGroup ): Promise<void> {
 			const batch = firebase.firestore().batch(); // for batch commit to /meals/ and supplier's meal list
 			const newMealDocRef = this.mealsColRef.doc(); // document reference to the new meal
@@ -34,16 +47,14 @@ export class MealService {
 				supplierRef: this.userTypeColUserDocRef,
 				mealName: mealCreateForm.value.mealName,
 				mealDescription: mealCreateForm.value.mealDescription,
-				originalPrice: mealCreateForm.value.originalPrice.toFixed(2),
-				discountPrice: mealCreateForm.value.discountPrice.toFixed(2),
+				originalPrice: mealCreateForm.value.originalPrice,
+				discountPrice: mealCreateForm.value.discountPrice,
 				numMeals: mealCreateForm.value.numMeals,
 				availabilityWindowStart: mealCreateForm.value.availabilityWindowStart,
 				availabilityWindowEnd: mealCreateForm.value.availabilityWindowEnd,
 				pickupType: mealCreateForm.value.pickupType,
 				coupon: mealCreateForm.value.coupon,
 			});
-
-			console.log(mealCreateForm.value.availabilityWindowStart);
 
 			// add meal reference to meals list under supplier
 			batch.set(this.supplierMealsListColDocRef,
@@ -80,33 +91,33 @@ export class MealService {
 		return this.mealsColRef;
 	}
 
-	// returns all meals from a specific supplier's list
-	// This method DOES NOT search through the /meals/ collection, it goes through the array of meal references from within the supplier doc
-	getMealsBySupplier( supplierId: string ) {
-		
+	// returns all meals from a specific supplier (using the referenceType)
+	getMealsBySupplier( supplierId: string ): firebase.firestore.Query {
+		const ref = firebase.firestore().collection('suppliers').doc(supplierId);
+		return this.mealsColRef.where('supplierRef', '==', ref);
+	}
+
+	// returns a list of meal references by price, in ascending order
+	// TODO: add distance & price filters
+	getMealsByPrice( /* price: number */ ): firebase.firestore.Query {
+		// return this.mealsColRef.where('discountPrice', '<=', price).orderBy('discountPrice', 'asc');
+		return this.userTypeCheck(this.userType, this.mealsColRef.orderBy('discountPrice', 'asc'));
 	}
 
 	// returns a list of meal references by proximity to user
-	getMealsByDistance( mealId: string, distance: number ): firebase.firestore.CollectionReference {
-		return null; // TODO
-	}
-
-	// returns a list of meal references by price, low to high
-	getMealsByPrice( mealId: string, distance: number ): firebase.firestore.CollectionReference {
+	getMealsByDistance( distance: number ): firebase.firestore.Query {
 		return null; // TODO
 	}
 
 	// returns a list of meal references by expiration date, soonest first
-	getMealsByExpirationDate( mealId: string, distance: number ): firebase.firestore.CollectionReference {
+	// TODO: add distance filter
+	getMealsByExpirationDate( expDate: string ): firebase.firestore.Query {
 		return null; // TODO
 	}
 
 	// returns a list of meal references by expiration date, soonest first
-	getMealsByTag(
-		mealId: string,
-		distance: number,
-		tags: Array<string>,
-		): firebase.firestore.CollectionReference {
+	// TODO: add distance filter
+	getMealsByTag( tags: Array<string> ): firebase.firestore.Query {
 			return null; // TODO
 	}
 }

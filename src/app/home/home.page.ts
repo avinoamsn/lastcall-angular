@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MealService } from '../services/meal/meal.service';
 import { ProfileService } from '../services/user/profile.service';
 import { Router } from '@angular/router';
 
@@ -25,7 +24,6 @@ export class HomePage implements OnInit {
 	// reroute user to the correct dashboard, based on userType
 	// TODO: guard against users getting to the alternate dash by manually entering URL
 	async rerouteToUserDashboard( userType: string ) {
-		console.log(userType);
 
 		if (userType === 'supplier') {
 			this.router.navigateByUrl('dashboard-supplier');

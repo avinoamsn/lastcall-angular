@@ -39,6 +39,10 @@ export class ProfileService {
 		return this.userType;
 	}
 
+	getUserId(): any {
+		return this.currentUser.uid;
+	}
+
 	// returns the document reference to the user in the `/users/` collection
 	getUserColUserDocRef(): firebase.firestore.DocumentReference {
 		return this.userColUserDocRef;

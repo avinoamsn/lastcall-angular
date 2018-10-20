@@ -43,7 +43,6 @@ export class MealCreatePage implements OnInit {
 		this.pickupTypes = [
 			{ text: 'Dine in', value: 'dine-in' },
 			{ text: 'Pickup', value: 'pickup' },
-			{ text: 'Delivery', value: 'delivery' }
 		];
 
 		// sets the default date (currently UTC time) for the availability window date/time selections
