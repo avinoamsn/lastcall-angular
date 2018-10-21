@@ -12,24 +12,27 @@ export class MealService {
 	public mealsColRef: firebase.firestore.CollectionReference;	// reference to the /meals/ collection
 	public userTypeColUserDocRef: firebase.firestore.DocumentReference; // doc reference to the current user in the `/${userType}s/` collection
 	public userType: any;
+	public userId: string;
 
 	constructor(
 		public profileService: ProfileService,
 	) {
 		this.mealsColRef = firebase.firestore().collection(`/meals/`);
 		this.userType = profileService.getUserType();
+		this.userId = profileService.getUserId();
 	}
 
 	// all queries are piped through userTypeCheck before being returned
 	// if the userType is supplier, queries are filtered by supplier
 	// (assumption is suppliers only need to see their meals)
 	userTypeCheck( userType: string, query: any ): firebase.firestore.Query {
-		// TODO
-		/*if (userType === 'supplier') {
-			const ref = firebase.firestore().collection('suppliers').doc(supplierId);
-			return this.mealsColRef.where('supplierRef', '==', ref);
-		}*/
-		return null;
+		console.log(userType);
+		if (userType === 'supplier') {
+			const ref = firebase.firestore().collection('suppliers').doc(this.userId);
+			return query.where('supplierRef', '==', ref);
+		} else {
+			return query;
+		}
 	}
 
 	// (for suppliers) add meal
@@ -81,14 +84,9 @@ export class MealService {
 		return this.mealsColRef.doc(mealId);
 	}
 
-	// return a doc reference to a specific meal within a supplier's collection
-	getSupplierMeal(): firebase.firestore.DocumentReference {
-		return this.supplierMealsListColDocRef;
-	}
-
 	// returns all meals as they're ordered in the collection
-	getMeals(): firebase.firestore.CollectionReference {
-		return this.mealsColRef;
+	getMeals( userType: string ): firebase.firestore.Query {
+		return this.userTypeCheck(userType, this.mealsColRef);
 	}
 
 	// returns all meals from a specific supplier (using the referenceType)
@@ -99,9 +97,12 @@ export class MealService {
 
 	// returns a list of meal references by price, in ascending order
 	// TODO: add distance & price filters
-	getMealsByPrice( /* price: number */ ): firebase.firestore.Query {
+	getMealsByPrice( userType: string, /* price: number */ ): firebase.firestore.Query {
 		// return this.mealsColRef.where('discountPrice', '<=', price).orderBy('discountPrice', 'asc');
-		return this.userTypeCheck(this.userType, this.mealsColRef.orderBy('discountPrice', 'asc'));
+		return this.userTypeCheck(
+			userType,
+			this.mealsColRef.orderBy('discountPrice', 'asc')
+		);
 	}
 
 	// returns a list of meal references by proximity to user

@@ -46,7 +46,7 @@ export class MealListPage implements OnInit {
 
 	// get all meals as they're ordered in the collection
 	async getMeals() {
-		this.mealListSnap = await this.mealService.getMeals().get();
+		this.mealListSnap = await this.mealService.getMeals(this.userType).get();
 		this.pushQueryToMealList(this.mealListSnap);
 	}
 
@@ -59,7 +59,7 @@ export class MealListPage implements OnInit {
 	// returns a list of meal references by price, in ascending order
 	// TODO: add distance & price filters
 	async getMealsByPrice() {
-		this.mealListSnap = await this.mealService.getMealsByPrice().get();
+		this.mealListSnap = await this.mealService.getMealsByPrice(this.userType).get();
 		this.pushQueryToMealList(this.mealListSnap);
 	}
 

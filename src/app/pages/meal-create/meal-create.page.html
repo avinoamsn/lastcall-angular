@@ -59,7 +59,7 @@
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Offer Window Start Time</ion-label>
+			<ion-label stacked>Offer Start</ion-label>
 			<ion-datetime formControlName="availabilityWindowStart" displayFormat="DDD, h:mm a"></ion-datetime>
 		</ion-item>
 
@@ -68,7 +68,7 @@
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Offer Window End Time</ion-label>
+			<ion-label stacked>Offer End</ion-label>
 			<ion-datetime formControlName="availabilityWindowEnd" displayFormat="DDD, h:mm a"></ion-datetime>
 		</ion-item>
 
@@ -77,7 +77,7 @@
 		</ion-item>
 
 		<ion-item>
-      <ion-label stacked>Pickup/Delivery</ion-label>
+      <ion-label stacked>Pickup/Dine-in</ion-label>
       <ion-select formControlName="pickupType" multiple="true" okText="Okay" cancelText="Dismiss">
 				<ion-select-option *ngFor="let type of pickupTypes" value="{{ type.value }}">{{ type.text }}</ion-select-option>
       </ion-select>
