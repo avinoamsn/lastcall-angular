@@ -6,7 +6,7 @@
 		</ion-buttons>
 
 		<ion-title>{{ currentMeal?.mealName }}</ion-title>
-		
+
   </ion-toolbar>
 </ion-header>
 
@@ -14,8 +14,10 @@
 
 	<ion-card>
 		<ion-card-content>
+			<h2>{{ currentMeal?.mealName }}</h2>
 			<p>{{ currentMeal?.mealDescription }}</p>
-			<p>{{ currentMeal?.discountPrice }}&emsp;<sup><s>{{ currentMeal?.originalPrice }}</s></sup></p>
+			<p>Meals available: {{ currentMeal?.numMeals }}</p>
+			<p>${{ currentMeal?.discountPrice }}&emsp;<sup><s>${{ currentMeal?.originalPrice }}</s></sup></p>
 			<h2>{{ currentMeal?.supplierRefData.firstName }} {{ currentMeal?.supplierRefData.lastName }}</h2>
 		</ion-card-content>
 	</ion-card>

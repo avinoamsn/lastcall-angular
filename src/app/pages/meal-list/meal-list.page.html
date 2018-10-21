@@ -27,7 +27,8 @@
 			<ion-label>
 				<h2>{{ meal?.mealName }}</h2>
 				<p>{{ meal?.mealDescription }}</p>
-				<p>{{ meal?.discountPrice }}&emsp;<sup><s>{{ meal?.originalPrice }}</s></sup></p>
+				<p>Meals available: {{ meal?.numMeals }}</p>
+				<p>${{ meal?.discountPrice }}&emsp;<sup><s>${{ meal?.originalPrice }}</s></sup></p>
 			</ion-label>
 		</ion-item>
 	</ion-list>

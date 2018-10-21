@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { ProfileService } from '../user/profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { convertDataToISO } from 'ionic-angular/util/datetime-util'; // planned on using this to remedy the date formatting problem
+// import { convertDataToISO } from 'ionic-angular/util/datetime-util'; // planned on using this to remedy the date formatting problem
 
 @Injectable({
 	providedIn: 'root'
