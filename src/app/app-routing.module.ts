@@ -15,6 +15,7 @@ const routes: Routes = [
 	{ path: 'meal-detail/:id', loadChildren: './pages/meal-detail/meal-detail.module#MealDetailPageModule', canActivate: [AuthGuard] },
   { path: 'dashboard-supplier', loadChildren: './pages/dashboard-supplier/dashboard-supplier.module#DashboardSupplierPageModule' },
   { path: 'dashboard-subscriber', loadChildren: './pages/dashboard-subscriber/dashboard-subscriber.module#DashboardSubscriberPageModule' },
+  { path: 'profile-subscriber', loadChildren: './pages/profile-subscriber/profile-subscriber.module#ProfileSubscriberPageModule' },
 ];
 
 @NgModule({

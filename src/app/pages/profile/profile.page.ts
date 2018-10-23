@@ -29,7 +29,7 @@ export class ProfilePage implements OnInit {
 	// logs out the user
 	logOut(): void {
 		this.authService.logoutUser().then( () => {
-			this.router.navigateByUrl('/login');
+			this.router.navigateByUrl('login');
 		});
 	}
 

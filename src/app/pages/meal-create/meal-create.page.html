@@ -41,8 +41,8 @@
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Discount Price</ion-label>
-			<ion-input formControlName="discountPrice" type="number" placeholder="The original price of the meal." [class.invalid]="!mealCreateForm.controls['discountPrice'].valid && mealCreateForm.controls['discountPrice'].touched"></ion-input>
+			<ion-label stacked>Offer Price</ion-label>
+			<ion-input formControlName="discountPrice" type="number" placeholder="The offer price of the meal." [class.invalid]="!mealCreateForm.controls['discountPrice'].valid && mealCreateForm.controls['discountPrice'].touched"></ion-input>
 		</ion-item>
 
 		<ion-item class="error-message" *ngIf="!mealCreateForm.controls['discountPrice'].valid && mealCreateForm.controls['discountPrice'].touched">
