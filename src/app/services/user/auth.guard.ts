@@ -16,7 +16,7 @@ import 'firebase/auth';
 /*
  *	If auth state changed, check to see if user is logged in:
  *	true: continue unobstructed
- *	false: reroute to /login page
+ *	false: reroute to home page
  */
 export class AuthGuard implements CanActivate {
 	constructor(private router: Router) {}
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
 						resolve(true);
 					} else {
 						console.log('User is not logged in.');
-						this.router.navigate(['/login']);
+						this.router.navigate(['']);
 						resolve(false);
 					}
 				});

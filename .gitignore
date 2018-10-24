@@ -1,6 +1,10 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
+# ignore my firebase API config file (holds API keys) -> API is currently exposed on GH, fine for development
+# ./src/app/credentials.ts
+
+# Defaults
 *~
 *.sw[mnpcod]
 *.log

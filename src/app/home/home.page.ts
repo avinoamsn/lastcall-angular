@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/user/profile.service';
 import { Router } from '@angular/router';
+import { MenuController } from 'ionic-angular';
 
 @Component({
 	selector: 'app-home',
@@ -9,26 +10,27 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 	private userType: string;
+	private activeMenu: string;
+	private menuCtrl: MenuController;
 
 	constructor(
 		private profileService: ProfileService,
 		private router: Router,
 	) {}
 
-	// get userType & pass it to rerouteToUserDashboard()
-	async ngOnInit() {
-		this.userType = await	this.profileService.getUserType();
-		this.rerouteToUserDashboard( this.userType );
+	async ngOnInit() {}
+
+	// route to signup page
+	signUp() {
+		this.router.navigateByUrl('signup');
 	}
 
-	// reroute user to the correct dashboard, based on userType
-	// TODO: guard against users getting to the alternate dash by manually entering URL
-	async rerouteToUserDashboard( userType: string ) {
+	// route to login page
+	signIn() {
+		this.router.navigateByUrl('login');
+	}
 
-		if (userType === 'supplier') {
-			this.router.navigateByUrl('dashboard-supplier');
-		} else {
-			this.router.navigateByUrl('dashboard-subscriber');
-		}
+	openMenu() {
+		this.menuCtrl.open();
 	}
 }

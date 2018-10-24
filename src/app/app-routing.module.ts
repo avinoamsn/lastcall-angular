@@ -3,9 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './services/user/auth.guard';
 
 const routes: Routes = [
-	// TODO: add profile type to load correct profile module based on user (e.g. profile/:type)
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
-	{ path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthGuard] },
+	{ path: 'home', loadChildren: './home/home.module#HomePageModule' },
 	{ path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthGuard] },
 	{ path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 	{ path: 'reset-password', loadChildren: './pages/reset-password/reset-password.module#ResetPasswordPageModule' },
@@ -13,9 +12,12 @@ const routes: Routes = [
 	{ path: 'meal-create', loadChildren: './pages/meal-create/meal-create.module#MealCreatePageModule', canActivate: [AuthGuard] },
 	{ path: 'meal-list', loadChildren: './pages/meal-list/meal-list.module#MealListPageModule', canActivate: [AuthGuard] },
 	{ path: 'meal-detail/:id', loadChildren: './pages/meal-detail/meal-detail.module#MealDetailPageModule', canActivate: [AuthGuard] },
-  { path: 'dashboard-supplier', loadChildren: './pages/dashboard-supplier/dashboard-supplier.module#DashboardSupplierPageModule' },
-  { path: 'dashboard-subscriber', loadChildren: './pages/dashboard-subscriber/dashboard-subscriber.module#DashboardSubscriberPageModule' },
-  { path: 'profile-subscriber', loadChildren: './pages/profile-subscriber/profile-subscriber.module#ProfileSubscriberPageModule' },
+	{ path: 'dashboard-supplier',
+	loadChildren: './pages/dashboard-supplier/dashboard-supplier.module#DashboardSupplierPageModule', canActivate: [AuthGuard] },
+	{ path: 'dashboard-subscriber',
+	loadChildren: './pages/dashboard-subscriber/dashboard-subscriber.module#DashboardSubscriberPageModule', canActivate: [AuthGuard] },
+	{ path: 'profile-subscriber',
+	loadChildren: './pages/profile-subscriber/profile-subscriber.module#ProfileSubscriberPageModule', canActivate: [AuthGuard] },
 ];
 
 @NgModule({

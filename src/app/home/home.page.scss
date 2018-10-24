@@ -1,1 +1,203 @@
+// TODO: figure out how to move typefaces etc. to globals.scss & variables.scss (and import both)
+// TODO: make <h1> styles global (tag is only used in landing page)
 
+// HTML element styles
+
+h4 {
+	padding: 10px 15vw;
+	background-color: #e5e5e5;
+
+	font-family: 'Work Sans Semi-Bold', sans-serif;
+	font-size: 20px;
+}
+
+h3 {
+	margin-top: 35px;
+
+	font-family: 'Work Sans Light', sans-serif;
+	font-size: 20px;
+	color: #000;
+	text-transform: uppercase;
+}
+
+h2 {
+	margin-top: 10px;
+
+	font-family: 'Work Sans Semi-Bold', sans-serif;
+	font-size: 35px;
+}
+
+p, ol {
+	font-family: 'Work Sans Light', sans-serif;
+	font-size: 15px;
+	color: rgba(0, 0, 0, .6);
+	// text-align: justify;
+	margin-right: 20px;
+}
+
+ol {
+	padding-left: 20px;
+	margin-top: 2px;
+}
+
+ion-header::after {
+	background-image: none;
+}
+
+ion-content {
+	font-family: 'Work Sans', sans-serif; // for some reason, :host takes precedent over this
+
+	// LANDING PAGE
+	section.landing {
+		height: 100vh;
+		
+		// image can needs a linear-gradient array to display w/ tint overlay
+		background-image:
+			linear-gradient(
+				rgba(0, 0, 0, 0.1), 
+				rgba(0, 0, 0, 0.1)
+			),
+			url('../../assets/home/header.jpg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 0% 50%;
+
+		ion-toolbar {
+			// rm'ing defautl styles
+			--background: var(--ion-primary-color);
+			--border-color: rgba(var(--ion-toolbar-border-color-rgb, 0, 0, 0), 0);
+		
+			h1.title {	
+				margin-top: 10px;
+
+				font-family: 'Work Sans Semi-Bold', sans-serif;
+				font-size: 25px;
+				text-transform: uppercase;
+			}
+		
+			ion-icon {
+				color: #000;
+				font-size: 30px;
+			}
+		}
+
+		h1.landing-text {
+			margin-top: 25vh;
+			vertical-align: middle;
+
+			font-family: 'Work Sans Semi-Bold', sans-serif;
+			font-size: 50px;
+			color: #FFF;
+		}
+
+		div.buttons {
+			height: 40vh;
+
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-end;
+
+			button {
+				height: 50px;
+				width: 80vw;
+				border-radius: 25px;
+				margin: 10px;
+				background-color: #F2682C;
+				color: #FFF;
+
+				font-family: 'Work Sans Light', sans-serif;
+				font-size: 20px;
+			}
+		}	
+	}
+
+	// SECOND PAGE
+	section.second {
+		min-height: 100vh;
+
+		div.image-burger {
+			height: 45vh;
+			background-image: url('../../assets/home/burger.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+			// TODO: zoom & clip image to center burger (or just crop it in an editor)
+		}
+
+		section.second-split {
+			background-color: #e5e5e5;
+		}
+
+		div.image-cutlery {
+			height: 160px;
+			margin-bottom: -70px;
+
+			background-image: url('../../assets/home/cutlery.png');
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+		}
+	}
+
+	// THIRD PAGE
+	section.third {
+		background-color: #FFF;
+
+		div.image-bowl {
+			height: 45vh;
+
+			background-image: url('../../assets/home/bowl-2.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+		}
+
+		p.dark {
+			margin-bottom: 0;
+			color: rgba(0, 0, 0, .8);
+		}
+	}
+
+	// FOURTH PAGE
+	section.fourth {
+
+		div.image-founders {
+			height: 45vh;
+
+			background-image: url('../../assets/home/founders.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+		}
+	}
+}
+
+// Font family sources (TODO: move these to the variables file)
+@font-face {
+  font-family: 'Work Sans';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../../assets/fonts/WorkSans/WorkSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Medium';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../../assets/fonts/WorkSans/WorkSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Light';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../../assets/fonts/WorkSans/WorkSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Semi-Bold';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../../assets/fonts/WorkSans/WorkSans-SemiBold.ttf');
+}
