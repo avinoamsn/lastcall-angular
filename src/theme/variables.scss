@@ -5,7 +5,7 @@
 :root {
 
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #F2682C;
   --ion-color-primary-rgb: 56,128,255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255,255,255;
@@ -90,9 +90,43 @@
 	lightgraycustom : #b2b2b2
 );*/
 
-/*@font-face {
-  font-family: 'Open Sans';
+@font-face {
+  font-family: 'Work Sans';
   font-style: extra-bold;
   font-weight: 900;
-  src: url('../assets/fonts/opensans/900/opensans-extrabold-webfont.ttf');
-}*/
+  src: url('../assets/fonts/WorkSans/WorkSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Medium';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../assets/fonts/WorkSans/WorkSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Light';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../assets/fonts/WorkSans/WorkSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Work Sans Semi-Bold';
+  font-style: extra-bold;
+  font-weight: 900;
+  src: url('../assets/fonts/WorkSans/WorkSans-SemiBold.ttf');
+}
+
+$font-family-base: "Work Sans", sans-serif;
+
+$grid-breakpoints: (
+ xs: 0, // Phone (0px - 575px)
+ sm: 576px, // Phablet (576px - 767px)
+ md: 768px, // Tablet vertical (768px - 991px)
+ lg: 992px // Tablet horizontal, Desktop (992px and above)
+);
+
+$grid-max-widths: (
+ lg: 992px
+);

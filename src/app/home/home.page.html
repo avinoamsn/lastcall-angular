@@ -1,80 +1,85 @@
 <ion-content>
+	<ion-grid fixed>
 	
-	<section class="landing" padding>
-		<ion-header>
-			<ion-toolbar>
+		<section class="landing" padding>
+			<ion-header>
+				<ion-toolbar>
 
-				<h1 class="title">Last Call</h1>
-				
+					<h1 class="title">Last Call</h1>
+					
+					<ion-buttons slot="end">
+						<ion-button ion-button menuToggle>
+							<ion-icon name="menu"></ion-icon>
+						</ion-button>
+					</ion-buttons>
 
-				<ion-buttons slot="end">
-					<ion-button ion-button menuToggle>
-						<ion-icon name="menu"></ion-icon>
-					</ion-button>
+				</ion-toolbar>
+
+				<h1 class="landing-text">Good food,<br />cheap.</h1>
+
+				<div class="buttons">
+					<button class="sign-up" (click)="signUp()">Sign Up</button>
+					<button class="sign-in" (click)="signIn()">Sign In</button>
+				</div>
+
+				<ion-buttons class="buttons">
+					<ion-button (click)="signUp()">Sign Up</ion-button>
 				</ion-buttons>
 
-			</ion-toolbar>
-
-			<h1 class="landing-text">Good food,<br />cheap.</h1>
-
-			<div class="buttons">
-				<button class="sign-up" (click)="signUp()">Sign Up</button>
-				<button class="sign-in" (click)="signIn()">Sign In</button>
-			</div>
-
-		</ion-header>
-	</section>
-
-	<section class="second">
-
-		<div class="image-burger"></div>
-
-		<section class="second-text" padding>
-			<h3>About</h3>
-			<h2>We do more <br /> than dinner.</h2>
-			<p>Reduce restaurant food waste and get<br />food for less. Whether you’re dreaming<br />of a meal during a late-night study<br />session, or pinching pennies to eat, we're<br />here for you. Get delicious, restaurant-<br />quality meals for 50-80% off.</p>
+			</ion-header>
 		</section>
 
-		<section class="second-split">
-			<h4>Treat yourself, your body, and your world.</h4>
-			<div class="image-cutlery"></div>
-		</section>
+		<section class="second">
 
-	</section>
+			<div class="image-burger"></div>
 
-	<section class="third">
-
-		<div class="image-bowl"></div>
-
-		<section class="third-text" padding>
-			<h3>About</h3>
-			<h2>How it works.</h2>
-			<p class="dark">Consumers</p>
-				<ol>
-					<li>Recieve notifications for delicious meals.</li>
-					<li>Choose from a variety of great options.</li>
-					<li>Head to the restaurant to pick up your food.</li>
-				</ol>
-			<p class="dark">Restaurants</p>
-				<ol>
-					<li>Input tasty meal options for the day</li>
-					<li>Specify quantity and pickup window.</li>
-					<li>Sell food that would otherwise be tossed.</li>
-				</ol>
-		</section>
-
-	</section>
-
-	<section class="fourth">
-
-		<div class="image-founders"></div>
-
-		<section class="fourth-text" padding>
+			<section class="second-text" padding>
 				<h3>About</h3>
-				<h2>Who we are.</h2>
-				<p>Last Call was founded in 2017 by two college students with a mission to change the world.<br /><br />Erin attended George Washington University on a full-ride scholarship, and struggled to afford food on campus when GW took away its dining hall. Chloe worked with the World Wildlife Fund’s Food Waste team for two years, learning more each day about how wasting 1/3 of all the food we produce affects our environment and society.<br /><br />With restaurants responsible for 40% of this food waste while 1 in 7 local residents are food insecure, Erin and Chloe realized they needed a better solution. Thus, Last Call was born with the mission to reduce restaurant food waste and provide more affordable food to our community.</p>
+				<h2>We do more <br /> than dinner.</h2>
+				<p>Reduce restaurant food waste and get<br />food for less. Whether you’re dreaming<br />of a meal during a late-night study<br />session, or pinching pennies to eat, we're<br />here for you. Get delicious, restaurant-<br />quality meals for 50-80% off.</p>
 			</section>
 
-	</section>
+			<section class="second-split">
+				<h4>Treat yourself, your wallet,<br />and your world.</h4>
+				<div class="image-cutlery"></div>
+			</section>
 
+		</section>
+
+		<section class="third">
+
+			<div class="image-bowl"></div>
+
+			<section class="third-text" padding>
+				<h3>About</h3>
+				<h2>How it works.</h2>
+				<p class="dark">Consumers</p>
+					<ol>
+						<li>Recieve notifications for delicious meals.</li>
+						<li>Choose from a variety of great options.</li>
+						<li>Head to the restaurant to pick up your food.</li>
+					</ol>
+				<p class="dark">Restaurants</p>
+					<ol>
+						<li>Input tasty meal options for the day</li>
+						<li>Specify quantity and pickup window.</li>
+						<li>Sell food that would otherwise be tossed.</li>
+					</ol>
+			</section>
+
+		</section>
+
+		<section class="fourth">
+
+			<div class="image-founders"></div>
+
+			<section class="fourth-text" padding>
+					<h3>About</h3>
+					<h2>Who we are.</h2>
+					<p>Last Call was founded in 2017 by two college students with a mission to change the world.<br /><br />Erin attended George Washington University on a full-ride scholarship, and struggled to afford food on campus when GW took away its dining hall. Chloe worked with the World Wildlife Fund’s Food Waste team for two years, learning more each day about how wasting 1/3 of all the food we produce affects our environment and society.<br /><br />With restaurants responsible for 40% of this food waste while 1 in 7 local residents are food insecure, Erin and Chloe realized they needed a better solution. Thus, Last Call was born with the mission to reduce restaurant food waste and provide more affordable food to our community.</p>
+				</section>
+
+		</section>
+
+	</ion-grid>
 </ion-content>
