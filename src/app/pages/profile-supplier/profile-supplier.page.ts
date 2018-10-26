@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-profile',
-	templateUrl: './profile.page.html',
-	styleUrls: ['./profile.page.scss'],
+	templateUrl: './profile-supplier.page.html',
+	styleUrls: ['./profile-supplier.page.scss'],
 })
 export class ProfileSupplierPage implements OnInit {
 	public userProfile: any; // 'any' type is used b/c TSlint declares it as a type specific to this directory. I'm not yet sure why that is.
