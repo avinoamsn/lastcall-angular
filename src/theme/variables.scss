@@ -78,17 +78,11 @@
 
 }
 
-/*$colors: (
-	primary: #EF5A28,
-	secondary: #f5911e,
-	danger: #f53d3d,
-	light: #f4f4f4,
-	dark: #222,
-	favorite: #69BB7B,
-	darkgraycustom: #333333,
-	mediumgraycustom:#666666,
-	lightgraycustom : #b2b2b2
-);*/
+// TODO: why isn't this getting imported?
+$colors: (
+	primary: #F2682C,
+	grayBackground: #e5e5e5,
+);
 
 @font-face {
   font-family: 'Work Sans';

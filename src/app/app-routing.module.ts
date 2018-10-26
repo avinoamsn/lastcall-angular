@@ -18,6 +18,7 @@ const routes: Routes = [
 	loadChildren: './pages/dashboard-subscriber/dashboard-subscriber.module#DashboardSubscriberPageModule', canActivate: [AuthGuard] },
 	{ path: 'profile-subscriber',
 	loadChildren: './pages/profile-subscriber/profile-subscriber.module#ProfileSubscriberPageModule', canActivate: [AuthGuard] },
+  { path: 'blog', loadChildren: './pages/blog/blog.module#BlogPageModule' },
 ];
 
 @NgModule({

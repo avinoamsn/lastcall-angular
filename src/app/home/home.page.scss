@@ -2,6 +2,7 @@
 // TODO: make <h1> styles global (tag is only used in landing page)
 
 // HTML element styles
+@import url('../../theme/variables.scss');
 
 h4 {
 	padding: 10px 15vw;
@@ -176,33 +177,4 @@ ion-content {
 			background-position: 50% 50%;
 		}
 	}
-}
-
-// Font family sources (TODO: move these to the variables file)
-@font-face {
-  font-family: 'Work Sans';
-  font-style: extra-bold;
-  font-weight: 900;
-  src: url('../../assets/fonts/WorkSans/WorkSans-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Work Sans Medium';
-  font-style: extra-bold;
-  font-weight: 900;
-  src: url('../../assets/fonts/WorkSans/WorkSans-Medium.ttf');
-}
-
-@font-face {
-  font-family: 'Work Sans Light';
-  font-style: extra-bold;
-  font-weight: 900;
-  src: url('../../assets/fonts/WorkSans/WorkSans-Light.ttf');
-}
-
-@font-face {
-  font-family: 'Work Sans Semi-Bold';
-  font-style: extra-bold;
-  font-weight: 900;
-  src: url('../../assets/fonts/WorkSans/WorkSans-SemiBold.ttf');
 }
