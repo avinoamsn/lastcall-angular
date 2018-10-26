@@ -19,6 +19,7 @@ const routes: Routes = [
 	{ path: 'profile-subscriber',
 	loadChildren: './pages/profile-subscriber/profile-subscriber.module#ProfileSubscriberPageModule', canActivate: [AuthGuard] },
   { path: 'blog', loadChildren: './pages/blog/blog.module#BlogPageModule' },
+  { path: 'profile-supplier', loadChildren: './pages/profile-supplier/profile-supplier.module#ProfileSupplierPageModule' },
 ];
 
 @NgModule({

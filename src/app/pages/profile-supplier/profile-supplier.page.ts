@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 	templateUrl: './profile.page.html',
 	styleUrls: ['./profile.page.scss'],
 })
-export class ProfileSubscriberPage implements OnInit {
+export class ProfileSupplierPage implements OnInit {
 	public userProfile: any; // 'any' type is used b/c TSlint declares it as a type specific to this directory. I'm not yet sure why that is.
 
 	constructor(
