@@ -33,8 +33,14 @@ export class UploadService {
 		});
 	}
 
-	// remove file data from db
+	// TODO: remove file data from db
 	private deleteFileData(key: string) {
-		return this.db.list(`${this.basePath}/`).remove(key);
+		// return this.db.col(`${this.basePath}/`).remove(key);
+	}
+
+	// delete storage info from db
+	private deleteFileStorage(name: string) {
+		const storageRef = firebase.storage().ref();
+		storageRef.child(`${this.basePath}/${name}`).delete();
 	}
 }
